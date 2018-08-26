@@ -7,8 +7,8 @@ android {
         applicationId "com.aufthesis.idiom"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.0.0" // 2018/08/17 new release 1.0.0
+        versionCode 4
+        versionName "1.0.1" // 2018/08/26 v1.0.1
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -33,11 +33,11 @@ dependencies {
 //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
 //    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'com.google.android.gms:play-services-analytics:16.0.1'
-    implementation 'com.google.firebase:firebase-core:16.0.1'  // analyticsを実装
+    implementation 'com.google.android.gms:play-services-analytics:16.0.3'
+    implementation 'com.google.firebase:firebase-core:16.0.3'  // analyticsを実装
     implementation 'com.google.firebase:firebase-ads:15.0.1'
     implementation 'com.google.firebase:firebase-appindexing:16.0.1'
-    implementation 'com.google.firebase:firebase-crash:16.0.1' // crashを実装
+    implementation 'com.google.firebase:firebase-crash:16.2.0' // crashを実装
     implementation 'com.google.firebase:firebase-messaging:17.3.0'
 }
 apply plugin: 'com.google.gms.google-services'
