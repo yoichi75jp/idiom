@@ -31,7 +31,7 @@ public class SettingsActivity extends Activity {
     private SharedPreferences m_prefs;
     private AdView m_adView;
 
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,8 +158,9 @@ public class SettingsActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
+        if(item.getItemId() == android.R.id.home){
+//        switch(item.getItemId()) {
+//            case android.R.id.home:
                 finish();
                 // アニメーションの設定
                 overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);

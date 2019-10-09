@@ -3,8 +3,8 @@ package com.aufthesis.idiom;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
-import android.content.ClipData;
-import android.content.ClipboardManager;
+//import android.content.ClipData;
+//import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
+//import android.support.v4.content.res.ResourcesCompat;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -29,16 +29,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+//import android.widget.AdapterView;
+//import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+//import android.widget.CheckBox;
+//import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+//import android.widget.ListView;
+//import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -48,7 +50,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONArray;
-import org.w3c.dom.Text;
+//import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -93,7 +95,7 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
     private Button m_charAns6;
     private Button m_charAns7;
 
-    final private int m_tolerance = 50;
+//    final private int m_tolerance = 50;
 
     private AdView m_adView;
 //    private AdView m_adView2;
@@ -115,9 +117,9 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
             m_level = level;
             m_category = category;
         }
-        public boolean equals(String obj){
-            return this.m_idiom.equals(obj);
-        }
+//        public boolean equals(String obj){
+//            return this.m_idiom.equals(obj);
+//        }
     }
     private List<Idiom> m_listIdiom = new ArrayList<>();
     //private List<Idiom> m_listLowLevelIdiom = new ArrayList<>();
@@ -140,9 +142,9 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
     private Drawable m_originalDrawable;
 
     //private final int m_defaultColor = Color.parseColor("#bcffff"); // LightCyan
-    private final int m_defaultColor = Color.parseColor("#E0E0E0"); // Gray
+    //private final int m_defaultColor = Color.parseColor("#E0E0E0"); // Gray
     private final int m_onCorrectColor = Color.parseColor("#008000"); // green
-    private final int m_onIncorrectColor = Color.parseColor("#dc143c"); // crimson
+    //private final int m_onIncorrectColor = Color.parseColor("#dc143c"); // crimson
     //private final int m_correctColor = Color.parseColor("#00FF00"); // Lime
 
     // 効果音用
@@ -150,7 +152,7 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
     private SoundPool m_soundPool;
     private int m_correctSound;
     private int m_incorrectSound;
-    private int m_clearSoundID;
+//    private int m_clearSoundID;
     private int m_levelUpID;
     private float m_volume;
 
@@ -185,8 +187,12 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
         // スマートフォンの液晶のサイズを取得を開始
         // ウィンドウマネージャのインスタンス取得
         WindowManager wm = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+        if(wm == null)
+            return;
         // ディスプレイのインスタンス生成
         Display disp = wm.getDefaultDisplay();
+        if(disp == null)
+            return;
         // スマートフォンの画面のサイズ
         Point point = new Point();
         disp.getSize(point);
@@ -256,7 +262,8 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
             m_mapButton.put(m_listID.get(i),button);
         }
         Button putBackButton = m_mapButton.get(R.id.put_back);
-        putBackButton.setEnabled(false);
+        if(putBackButton != null)
+            putBackButton.setEnabled(false);
 
         TextView instruction1 = findViewById(R.id.instruction1);
         m_originalDrawable = instruction1.getBackground();
@@ -340,6 +347,9 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
         String c;
         int id = view.getId();
         final Button button = m_mapButton.get(id);
+        if(button == null)
+            return;
+
         switch(id)
         {
             case R.id.ans1:
@@ -383,7 +393,8 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
                 m_listPreQuestion.clear();
                 m_listPreQuestion.addAll(m_listQuestion);
                 Button putBackButton = m_mapButton.get(R.id.put_back);
-                putBackButton.setEnabled(true);
+                if(putBackButton != null)
+                    putBackButton.setEnabled(true);
                 break;
             case R.id.put_back:
                 new AlertDialog.Builder(this)
@@ -507,7 +518,8 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
                         button.setBackgroundResource(R.drawable.circle2);
                         button.setText(getString(R.string.look_answer));
                         Button look_answer_btn = m_mapButton.get(R.id.look_answer_btn);
-                        look_answer_btn.setEnabled(false);
+                        if(look_answer_btn != null)
+                            look_answer_btn.setEnabled(false);
 
                         if(!MainActivity.g_doneReview)
                         {
@@ -561,7 +573,7 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
     }
 
     // 答えを見せてWeb検索もできる
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     private void showAnswer()
     {
         String idiom = m_listQuestion.get(0).get("idiom");
@@ -574,6 +586,7 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
     private void setCharacterSet(Boolean isNormalQuestion) {
         //既に本日解答した熟語を取得する
 
+        final int c_tolerance = 50;
         boolean isJP = Locale.getDefault().toString().equals(Locale.JAPAN.toString());
 //        m_checkHint.setEnabled(true);
 //        m_checkHint.setChecked(false);
@@ -599,10 +612,13 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
+        if(formatSaveDate == null)
+            return;
         //int diffDay = differenceDays(new Date(), formatSaveDate);
 
         Button look_answer_btn = m_mapButton.get(R.id.look_answer_btn);
-        look_answer_btn.setEnabled(true);
+        if(look_answer_btn != null)
+            look_answer_btn.setEnabled(true);
 
         Calendar calendar = Calendar.getInstance();
         //int date = calender.get(Calendar.DATE);
@@ -696,8 +712,8 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
                 if(m_answeredList.indexOf(idiom) >= 0) continue;  // 既に解答した熟語を省く
                 if(m_mode.equals(getString(R.string.level_normal)))
                 {
-                    if(m_sizeLevel1 + m_sizeLevel2 - m_tolerance > m_answeredList.size() && level == 0 || level >= 3) continue;
-                    if(m_sizeLevel1 - m_tolerance > m_answeredList.size() && level == 2) continue;
+                    if(m_sizeLevel1 + m_sizeLevel2 - c_tolerance > m_answeredList.size() && level == 0 || level >= 3) continue;
+                    if(m_sizeLevel1 - c_tolerance > m_answeredList.size() && level == 2) continue;
                 }
                 else if (level == 1) continue;
 
@@ -711,10 +727,10 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
                 m_listQuestion.add(mapQuestion);
                 break;
             }
-            if(m_listQuestion.size() == 0)
-            {
-                //TODO:すべての問題を解いてしまった場合の処理
-            }
+//            if(m_listQuestion.size() == 0)
+//            {
+//                //TODO:すべての問題を解いてしまった場合の処理
+//            }
 
             // 答えの選択肢を抽出
             for(int i = 0; i < m_listIdiom.size(); i++)
@@ -754,11 +770,15 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
             for(int i = 0; i < 7; i++)
             {
                 Button button = m_mapButton.get(m_listID.get(i));
-                button.setText(listCharacter.get(i));
+                if(button != null)
+                    button.setText(listCharacter.get(i));
             }
             Button button = m_mapButton.get(R.id.answer_btn);
-            button.setText(getString(R.string.to_answer));
-            button.setBackgroundResource(R.drawable.circle);
+            if(button != null)
+            {
+                button.setText(getString(R.string.to_answer));
+                button.setBackgroundResource(R.drawable.circle);
+            }
 
             //慣用句Editorを作成する
             m_ansId1 = 0;
@@ -793,6 +813,8 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
         {
             List<String> listCharacter = new ArrayList<>();
             String idiom = m_listPreQuestion.get(0).get("idiom");
+            if(idiom == null)
+                return;
             //String read = m_listPreQuestion.get(i).get("read");
             Map<String,String> mapQuestion = new HashMap<>();
             mapQuestion.put("idiom",idiom);
@@ -851,11 +873,15 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
             for(int i = 0; i < 7; i++)
             {
                 Button button = m_mapButton.get(m_listID.get(i));
-                button.setText(listCharacter.get(i));
+                if(button != null)
+                    button.setText(listCharacter.get(i));
             }
             Button button = m_mapButton.get(R.id.answer_btn);
-            button.setText(getString(R.string.to_answer));
-            button.setBackgroundResource(R.drawable.circle);
+            if(button != null)
+            {
+                button.setText(getString(R.string.to_answer));
+                button.setBackgroundResource(R.drawable.circle);
+            }
 
             //慣用句Editorを作成する
             m_ansId1 = 0;
@@ -919,7 +945,7 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
             messageText.setText(getString(R.string.next_message1));
             messageText.setTextColor(Color.BLUE);
         }
-        else if(score1 <= score2)
+        else// if(score1 <= score2)
         {
             lastWeeksScoreText.setTextSize(30);
             lastWeeksScoreText.setTextColor(Color.RED);
@@ -1019,7 +1045,7 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
         }
         m_correctSound = m_soundPool.load(getApplicationContext(), R.raw.correct2, 1);
         m_incorrectSound = m_soundPool.load(getApplicationContext(), R.raw.incorrect1, 1);
-        m_clearSoundID = m_soundPool.load(getApplicationContext(), R.raw.cheer, 1);
+        //m_clearSoundID = m_soundPool.load(getApplicationContext(), R.raw.cheer, 1);
         m_levelUpID = m_soundPool.load(getApplicationContext(), R.raw.ji_023, 1);
         if (m_adView != null) {
             m_adView.resume();
@@ -1179,10 +1205,10 @@ public class PuzzleActivity extends Activity implements View.OnClickListener {
             case 2:
                 m_volume = m_prefs.getInt(getString(R.string.seek_volume), 100)/100.f;
                 break;
-            case 3:
-                break;
-            case 4:
-                break;
+//            case 3:
+//                break;
+//            case 4:
+//                break;
             default:break;
         }
     }

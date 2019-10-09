@@ -45,9 +45,13 @@ public class WebBrowserActivity extends Activity {
         m_webView.getSettings().setJavaScriptEnabled(true);
 
         Intent intent = getIntent();
-        String query = intent.getExtras().getString(SearchManager.QUERY);
-        String url = "https://www.google.co.jp/search?q=" + query;
-        m_webView.loadUrl(url);
+        Bundle bundle = intent.getExtras();
+        if(bundle != null)
+        {
+            String query = bundle.getString(SearchManager.QUERY);
+            String url = "https://www.google.co.jp/search?q=" + query;
+            m_webView.loadUrl(url);
+        }
 
         //バナー広告
         m_adView = findViewById(R.id.adView2);
