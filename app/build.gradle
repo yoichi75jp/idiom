@@ -7,8 +7,8 @@ android {
         applicationId "com.aufthesis.idiom"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 6
-        versionName "1.0.2" // 2019/10/09 v1.0.2
+        versionCode 9
+        versionName "1.0.5" // 2019/10/22 v1.0.5
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
